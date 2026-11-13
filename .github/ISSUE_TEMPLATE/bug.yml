@@ -1,0 +1,40 @@
+name: Bug report
+description: Report a reproducible problem using safe sample data.
+title: "Bug: "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This issue will be public. Use a synthetic example. Do not upload a private repository, real credentials, or a context pack containing confidential information.
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: "1. Import a synthetic folder ...\n2. Select ...\n3. Export ..."
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Browser and operating system
+      placeholder: Chrome 145 on macOS
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: Small synthetic example or screenshot
+      description: Remove personal information and real secrets before attaching anything.

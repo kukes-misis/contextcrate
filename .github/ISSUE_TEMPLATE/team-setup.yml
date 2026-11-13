@@ -1,0 +1,57 @@
+name: Team setup inquiry
+description: Discuss a repository-specific handoff workflow and optional setup service.
+title: "Team setup: "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This is a public inquiry, not a purchase or support contract. Do not post private source, customer data, secrets, credentials, or internal repository URLs. Pricing and delivery require a written scope accepted by both parties. No payment is collected here.
+  - type: input
+    id: team
+    attributes:
+      label: Team or project
+      description: A public name or a non-identifying description is enough.
+      placeholder: A small TypeScript product team
+    validations:
+      required: true
+  - type: dropdown
+    id: team-size
+    attributes:
+      label: People using coding agents
+      options:
+        - "1–5"
+        - "6–15"
+        - "16–50"
+        - "More than 50"
+    validations:
+      required: true
+  - type: textarea
+    id: workflow
+    attributes:
+      label: What should the handoff workflow improve?
+      description: Describe your stack, current process, and desired outcome without private code.
+      placeholder: We want repeatable bug-fix briefs with relevant tests and a review checklist.
+    validations:
+      required: true
+  - type: dropdown
+    id: interest
+    attributes:
+      label: What are you interested in?
+      options:
+        - Repository setup and handoff templates
+        - Ongoing template maintenance
+        - Both
+        - Just discussing the free tool
+  - type: textarea
+    id: timing
+    attributes:
+      label: Timing and constraints
+      description: Optional. Do not assume a delivery date until it is agreed.
+  - type: checkboxes
+    id: public-information
+    attributes:
+      label: Public information
+      options:
+        - label: I understand this issue is public and have not included confidential information.
+          required: true
