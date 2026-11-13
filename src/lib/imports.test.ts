@@ -37,8 +37,8 @@ describe('folder and file imports', () => {
     expect(read).not.toHaveBeenCalled();
   });
   it('rejects traversal and duplicate normalized paths before reading', async () => {
-    await expect(importFiles([source('demo/../secret.ts')])).rejects.toThrow('unsafe');
-    await expect(importFiles([source('demo/src/a.ts'), source('demo/src/./a.ts')])).rejects.toThrow('Duplicate');
+    await expect(importFiles([source('demo/../secret.ts')])).rejects.toThrow('небезопасный');
+    await expect(importFiles([source('demo/src/a.ts'), source('demo/src/./a.ts')])).rejects.toThrow('Повторяющийся');
   });
   it('preserves unrelated roots and rejects too many files', async () => {
     const imported = await importFiles([source('one/a.ts'), source('two/b.ts')]);
@@ -46,10 +46,10 @@ describe('folder and file imports', () => {
     await expect(importFiles(Array.from({ length: 501 }, (_, i) => source(`root/${i}.ts`)))).rejects.toThrow('500');
   });
   it('rejects empty imports and total source size over limit', async () => {
-    await expect(importFiles([])).rejects.toThrow('Choose');
+    await expect(importFiles([])).rejects.toThrow('Выберите');
     const file = source('large.ts');
     Object.defineProperty(file, 'size', { value: MAX_TOTAL_BYTES + 1 });
-    await expect(importFiles([file])).rejects.toThrow('10 MB');
+    await expect(importFiles([file])).rejects.toThrow('10 МБ');
   });
   it('marks unsupported byte encodings as ignored rather than sharing corrupt text', async () => {
     const imported = await importFiles([new File([new Uint8Array([0xff, 0xfe, 0x00])], 'legacy.txt')]);
@@ -67,7 +67,7 @@ describe('bounded ZIP imports', () => {
     expect(assessFiles(imported.files).map(file => file.status)).toEqual(['safe', 'blocked', 'ignored']);
   });
   it('rejects traversal archive entries', async () => {
-    await expect(importZip(archive({ '../outside.ts': 'bad' }))).rejects.toThrow('unsafe');
+    await expect(importZip(archive({ '../outside.ts': 'bad' }))).rejects.toThrow('небезопасный');
   });
   it('does not decompress files larger than the individual limit', async () => {
     const imported = await importZip(archive({ 'demo/huge.txt': 'a'.repeat(MAX_FILE_BYTES + 1), 'demo/ok.ts': 'ok' }));
@@ -78,14 +78,14 @@ describe('bounded ZIP imports', () => {
   it('rejects a compressed bomb by uncompressed directory size', async () => {
     const file = archive({ 'huge.txt': 'a'.repeat(MAX_TOTAL_BYTES + 1) });
     expect(file.size).toBeLessThan(100_000);
-    await expect(importZip(file)).rejects.toThrow('10 MB');
+    await expect(importZip(file)).rejects.toThrow('10 МБ');
   });
   it('rejects a malformed or oversized compressed archive', async () => {
-    await expect(importZip(new File(['not a zip'], 'broken.zip'))).rejects.toThrow('Cannot import ZIP');
+    await expect(importZip(new File(['not a zip'], 'broken.zip'))).rejects.toThrow('Не удалось импортировать ZIP');
     const file = archive({ 'ok.txt': 'ok' });
     Object.defineProperty(file, 'size', { value: MAX_TOTAL_BYTES + 1 });
     const read = vi.spyOn(file, 'arrayBuffer');
-    await expect(importZip(file)).rejects.toThrow('compressed-size');
+    await expect(importZip(file)).rejects.toThrow('сжатого ZIP');
     expect(read).not.toHaveBeenCalled();
   });
 });

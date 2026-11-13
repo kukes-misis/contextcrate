@@ -1,40 +1,40 @@
-name: Bug report
-description: Report a reproducible problem using safe sample data.
-title: "Bug: "
+name: Сообщить об ошибке
+description: Опишите воспроизводимую ошибку на безопасном примере.
+title: "Ошибка: "
 labels: []
 body:
   - type: markdown
     attributes:
       value: |
-        This issue will be public. Use a synthetic example. Do not upload a private repository, real credentials, or a context pack containing confidential information.
+        Сообщение будет публичным. Используйте вымышленный пример. Не загружайте закрытый проект, настоящие учётные данные и пакеты с конфиденциальной информацией.
   - type: textarea
     id: steps
     attributes:
-      label: Steps to reproduce
-      placeholder: "1. Import a synthetic folder ...\n2. Select ...\n3. Export ..."
+      label: Шаги для воспроизведения
+      placeholder: "1. Импортируйте тестовую папку ...\n2. Выберите ...\n3. Экспортируйте ..."
     validations:
       required: true
   - type: textarea
     id: expected
     attributes:
-      label: Expected result
+      label: Ожидаемый результат
     validations:
       required: true
   - type: textarea
     id: actual
     attributes:
-      label: Actual result
+      label: Фактический результат
     validations:
       required: true
   - type: input
     id: environment
     attributes:
-      label: Browser and operating system
-      placeholder: Chrome 145 on macOS
+      label: Браузер и операционная система
+      placeholder: Safari на macOS
     validations:
       required: true
   - type: textarea
     id: example
     attributes:
-      label: Small synthetic example or screenshot
-      description: Remove personal information and real secrets before attaching anything.
+      label: Небольшой тестовый пример или скриншот
+      description: Перед отправкой удалите персональные данные и настоящие секреты.

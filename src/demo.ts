@@ -1,8 +1,8 @@
 import type { SourceFile } from './lib/engine';
-export const demoGoal = 'Add a search filter to the project list. Match project names without case sensitivity and show a useful empty state.';
-export const demoCriteria = 'Keep the current sorting. Add tests for case-insensitive matches and no results. Make the search input accessible.';
+export const demoGoal = 'Добавьте поиск по списку проектов без учёта регистра. Если ничего не найдено, покажите понятное сообщение.';
+export const demoCriteria = 'Сохраните текущую сортировку. Добавьте тесты для поиска без учёта регистра и пустого результата. Сделайте поле поиска доступным.';
 export const demoFiles: SourceFile[] = [
-{path:'README.md',content:'# Orbit\nA small project dashboard built with React and TypeScript.\nRun npm test for unit checks.\n'},
+{path:'README.md',content:'# Orbit\nНебольшая панель проектов на React и TypeScript.\nЗапустите npm test для проверки.\n'},
 {path:'src/App.tsx',content:"import { ProjectList } from './components/ProjectList';\nimport { projects } from './data/projects';\n\nexport function App() {\n  return <main><h1>Your projects</h1><ProjectList projects={projects} /></main>;\n}\n"},
 {path:'src/components/ProjectList.tsx',content:"import { sortProjects, type Project } from '../lib/projects';\n\nexport function ProjectList({ projects }: { projects: Project[] }) {\n  const sorted = sortProjects(projects);\n  return <ul>{sorted.map(project => <li key={project.id}>\n    <a href={project.url}>{project.name}</a>\n    <span>{project.status}</span>\n  </li>)}</ul>;\n}\n"},
 {path:'src/lib/projects.ts',content:"export interface Project { id: string; name: string; url: string; status: 'active' | 'archived' }\n\nexport function sortProjects(projects: Project[]): Project[] {\n  return [...projects].sort((a, b) => a.name.localeCompare(b.name));\n}\n"},
